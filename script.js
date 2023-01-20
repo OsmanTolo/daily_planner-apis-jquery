@@ -8,19 +8,17 @@ $(document).ready(function () {
 
   let businessHours = [9, 10, 11, 12, 1, 2, 3, 4, 5];
   let $timeBlockContainerEl = $(".container");
-  businessHours.forEach((el) => {
+  businessHours.forEach((hour, index) => {
     $timeBlockContainerEl.append(
       `
       <div class="row">
-        <p class="col hour time-block">${el}</p>
+        <p class="col hour time-block">${hour}${index >= 3 ? "PM" : "AM"}</p>
         <textarea
           class="col-10"
           name="description"
           id="description"
-          cols="30"
-          rows="4"
         ></textarea>
-        <button class="col saveBtn">
+        <button class="col btn saveBtn" type="button">
           <i class="fas fa-save"></i>
         </button>
       </div>
