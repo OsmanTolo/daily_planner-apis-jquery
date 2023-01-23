@@ -38,7 +38,7 @@ $(document).ready(function () {
         <button class="col saveBtn text-center" id="save-btn" data-time="${hour}${
         index >= 3 ? "PM" : "AM"
       }">
-          <i class="fas margin-auto d-block fa-save"></i>
+          <i class="fas fa-save margin-auto d-block "></i>
         </button>
       </div>
       `
@@ -47,14 +47,13 @@ $(document).ready(function () {
     // Todo colour coding
     $("textarea").each(function () {
       let timeNow = moment().hours();
+      let textAreaTime = parseInt($(this).attr("data-time"));
       console.log(timeNow);
-      if (timeNow === parseInt($(this).attr("data-time"))) {
-        $(this).addClass("present");
-        console.log(`present`);
-      } else if (timeNow < parseInt($(this).attr("data-time"))) {
+      if (timeNow < textAreaTime) {
         $(this).addClass("past");
-        console.log(`past`);
-        console.log(parseInt($(this).attr("data-time")));
+      } else if (timeNow === textAreaTime) {
+        $(this).addClass("present");
+        console.log(textAreaTime);
       } else {
         $(this).addClass("future");
       }
