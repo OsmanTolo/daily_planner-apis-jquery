@@ -11,6 +11,17 @@ $(document).ready(function () {
   }, 1000);
 
   // Todo: Get the items from the local storage at every refresh
+  function getStoredtasks() {
+    let storedTasks = { ...localStorage };
+    console.log(storedTasks);
+
+    for (const property in storedTasks) {
+      if ($("textarea").attr("data-time") === property) {
+        $("textarea").text(`${storedTasks[property]}`);
+      }
+    }
+  }
+  getStoredtasks();
 
   let businessHours = [9, 10, 11, 12, 1, 2, 3, 4, 5];
   let $timeBlockContainerEl = $(".container");
