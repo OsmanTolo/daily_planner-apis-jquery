@@ -11,17 +11,16 @@ $(document).ready(function () {
   }, 1000);
 
   // Todo: Get the items from the local storage at every refresh
-  function getStoredtasks() {
+  function getStoredTasks() {
     let storedTasks = { ...localStorage };
     console.log(storedTasks);
 
     for (const property in storedTasks) {
-      if ($("textarea").attr("data-time") === property) {
-        $("textarea").text(`${storedTasks[property]}`);
+      if ($(`.${property}`)) {
+        $(`.${property}`).text(`${storedTasks[property]}`);
       }
     }
   }
-  getStoredtasks();
 
   let businessHours = [9, 10, 11, 12, 1, 2, 3, 4, 5];
   let $timeBlockContainerEl = $(".container");
@@ -31,9 +30,10 @@ $(document).ready(function () {
       <div class="row">
         <div class="col hour">${hour}${index >= 3 ? "PM" : "AM"}</div>
         <textarea
-          class="col-10"
+          class="col-10 ${hour}${index >= 3 ? "PM" : "AM"}"
           name="description"
           id="description"
+          data-time="${index + 9}"
         ></textarea>
         <button class="col saveBtn text-center" id="save-btn" data-time="${hour}${
         index >= 3 ? "PM" : "AM"
@@ -43,6 +43,22 @@ $(document).ready(function () {
       </div>
       `
     );
+
+    // Todo colour coding
+    $("textarea").each(function () {
+      let timeNow = moment().hours();
+      console.log(timeNow);
+      if (timeNow === parseInt($(this).attr("data-time"))) {
+        $(this).addClass("present");
+        console.log(`present`);
+      } else if (timeNow < parseInt($(this).attr("data-time"))) {
+        $(this).addClass("past");
+        console.log(`past`);
+        console.log(parseInt($(this).attr("data-time")));
+      } else {
+        $(this).addClass("future");
+      }
+    });
   });
 
   // Save the textarea content to local storage when the btn is pressed
@@ -52,12 +68,5 @@ $(document).ready(function () {
     // Save textarea content to local storage using data-time as key
     localStorage.setItem(`${$(e.target).attr("data-time")}`, $textAreaValue);
   });
+  getStoredTasks();
 });
-
-// if (currentHour === textareaHour) {
-//   $("textarea").addClass("present");
-// } else if (currentHour > textareaHour) {
-//   $("textarea").addClass("past");
-// } else {
-//   $("textarea").addClass("future");
-// }
