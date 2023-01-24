@@ -1,9 +1,5 @@
 $(document).ready(function () {
   let $currentDate = $("#currentDay");
-  let $currentTime = moment().format("h:mm:ss A");
-  let $currentHour = moment().format("h A");
-  console.log($currentHour);
-  console.log($currentTime);
 
   setInterval(() => {
     let time = moment().format("dddd, MMM Do, h:mm:ss A");
@@ -13,7 +9,6 @@ $(document).ready(function () {
   // Todo: Get the items from the local storage at every refresh
   function getStoredTasks() {
     let storedTasks = { ...localStorage };
-    console.log(storedTasks);
 
     for (const property in storedTasks) {
       if ($(`.${property}`)) {
@@ -44,11 +39,9 @@ $(document).ready(function () {
       `
     );
 
-    // Todo colour coding
     $("textarea").each(function () {
       let timeNow = moment().hours();
       let textAreaTime = parseInt($(this).attr("data-time"));
-      console.log(timeNow);
       if (timeNow > textAreaTime) {
         $(this).addClass("past");
       } else if (timeNow === textAreaTime) {
