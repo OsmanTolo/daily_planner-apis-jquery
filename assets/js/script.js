@@ -49,11 +49,10 @@ $(document).ready(function () {
       let timeNow = moment().hours();
       let textAreaTime = parseInt($(this).attr("data-time"));
       console.log(timeNow);
-      if (timeNow < textAreaTime) {
+      if (timeNow > textAreaTime) {
         $(this).addClass("past");
       } else if (timeNow === textAreaTime) {
         $(this).addClass("present");
-        console.log(textAreaTime);
       } else {
         $(this).addClass("future");
       }
@@ -63,9 +62,17 @@ $(document).ready(function () {
   // Save the textarea content to local storage when the btn is pressed
   $("button").on("click", function (e) {
     // Get the content of the text area
-    let $textAreaValue = $(e.target).siblings("textarea").val();
-    // Save textarea content to local storage using data-time as key
-    localStorage.setItem(`${$(e.target).attr("data-time")}`, $textAreaValue);
+    if (e.target.matches("i")) {
+      let $textAreaValue = $(e.target.parentElement).siblings("textarea").val();
+      // Save textarea content to local storage using data-time as key
+      localStorage.setItem(
+        `${$(e.target.parentElement).attr("data-time")}`,
+        $textAreaValue
+      );
+    } else {
+      let $textAreaValue = $(e.target).siblings("textarea").val();
+      localStorage.setItem(`${$(e.target).attr("data-time")}`, $textAreaValue);
+    }
   });
   getStoredTasks();
 });
